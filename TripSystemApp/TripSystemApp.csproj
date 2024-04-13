@@ -157,27 +157,75 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BussinessLogic\BookingService.cs" />
+    <Compile Include="BussinessLogic\UserService.cs" />
+    <Compile Include="DataAccess\GenericRepository.cs" />
+    <Compile Include="DataAccess\TransportationOptionRepository.cs" />
     <Compile Include="DataAccess\TravelDbContext.cs" />
+    <Compile Include="DataAccess\TripAccommodationRepository.cs" />
+    <Compile Include="DataAccess\TripTransportationRepository.cs" />
     <Compile Include="DataAccess\UserRepository.cs" />
-    <Compile Include="DataAccess\TripRepository.cs" />
-    <Compile Include="DataAccess\TransportationRepository.cs" />
     <Compile Include="DataAccess\DestinationRepository.cs" />
     <Compile Include="DataAccess\AccommodationRepository.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
+    <Compile Include="DataAccess\UserTripRepository.cs" />
+    <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Models\Accomodation.cs" />
     <Compile Include="Models\Destination.cs" />
-    <Compile Include="Models\Transportation.cs" />
-    <Compile Include="Models\Trip.cs" />
+    <Compile Include="Models\TransportationOption.cs" />
+    <Compile Include="Models\TripAccomodation.cs" />
+    <Compile Include="Models\TripTransportation.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserTrip.cs" />
+    <Compile Include="Presentation\AccomodationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\AccomodationForm.Designer.cs">
+      <DependentUpon>AccomodationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\BookingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\BookingForm.Designer.cs">
+      <DependentUpon>BookingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\TripPlannerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\TripPlannerForm.Designer.cs">
+      <DependentUpon>TripPlannerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\UserAuthRegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\UserAuthRegister.Designer.cs">
+      <DependentUpon>UserAuthRegister.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ViewModels\BookingViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\TripPlannerViewModel.cs" />
+    <EmbeddedResource Include="Presentation\AccomodationForm.resx">
+      <DependentUpon>AccomodationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\BookingForm.resx">
+      <DependentUpon>BookingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\TripPlannerForm.resx">
+      <DependentUpon>TripPlannerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\UserAuthRegister.resx">
+      <DependentUpon>UserAuthRegister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -203,11 +251,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BussinessLogic\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Presentation\" />
     <Folder Include="Tests\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

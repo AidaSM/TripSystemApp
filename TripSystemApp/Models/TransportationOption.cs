@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TripSystemApp.Models
 {
-    public class Transportation
+    public class TransportationOption
     {
+        [Key]
         public int TransportationID { get; set; }
         public string Type { get; set; }
         public string DepartureLocation { get; set; }

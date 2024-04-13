@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TripSystemApp.Models;
 
 namespace TripSystemApp.DataAccess
 {
-    public class UserRepository
+    public class UserRepository : GenericRepository<User>
     {
-        private readonly TravelDbContext _context;
-
-        public UserRepository(TravelDbContext context)
+        public UserRepository(TravelDbContext context) : base(context)
         {
-            _context = context;
+        }
+        public User GetUserByUsername(string username)
+        {
+            return _dbSet.FirstOrDefault(u => u.Username == username);
         }
 
-        public void AddUser(User user)
+        public User GetUserByEmail(string email)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            return _dbSet.FirstOrDefault(u => u.Email == email);
         }
-
-        // Implement other CRUD operations as needed
     }
 }

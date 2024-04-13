@@ -1,27 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TripSystemApp.Models;
 
 namespace TripSystemApp.DataAccess
 {
-    public class DestinationRepository
+    public class DestinationRepository : GenericRepository<Destination>
     {
-        private readonly TravelDbContext _context;
-
-        public DestinationRepository(TravelDbContext context)
+        public DestinationRepository(TravelDbContext context) : base(context)
         {
-            _context = context;
         }
-
-        public void AddDestination(Destination destination)
-        {
-            _context.Destinations.Add(destination);
-            _context.SaveChanges();
-        }
-
-        // Implement other CRUD operations as needed
     }
 }
