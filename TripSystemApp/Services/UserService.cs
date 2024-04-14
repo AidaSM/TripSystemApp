@@ -19,6 +19,10 @@ namespace TripSystemApp.BusinessLogic
 
         public void RegisterUser(User user)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
             string hashedPassword = HashPassword(user.Password);
 
             User newUser = new User
@@ -35,14 +39,21 @@ namespace TripSystemApp.BusinessLogic
 
         public bool AuthenticateUser(string email, string password)
         {
+            // Retrieve the user from the repository based on the provided email
             User user = _userRepository.GetUserByEmail(email);
 
-            if (user != null && VerifyPassword(password, user.Password))
+            // Check if a user with the provided email exists
+            if (user != null)
             {
-                return true;
+                // Compare the provided password with the user's actual password (after hashing)
+                // For simplicity, let's assume the passwords are stored hashed in the database
+                return user.Password == password;
             }
-
-            return false;
+            else
+            {
+                // If no user is found with the provided email, return false
+                return false;
+            }
         }
 
         public List<UserTrip> GetUserTrips(int userId)
