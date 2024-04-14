@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using TripSystemApp.Interfaces;
 using TripSystemApp.Models;
 
 namespace TripSystemApp.DataAccess
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly TravelDbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
@@ -23,9 +24,9 @@ namespace TripSystemApp.DataAccess
             _context.SaveChanges();
         }
 
-        public List<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll() 
         {
-            return _dbSet.ToList();
+            return _dbSet.ToList(); 
         }
 
         public TEntity GetById(int id)
@@ -38,7 +39,11 @@ namespace TripSystemApp.DataAccess
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
         }
-
+        public void Delete(TEntity entity)
+        {
+            _dbSet.Remove(entity);
+            _context.SaveChanges();
+        }
         public void Delete(int id)
         {
             var entity = _dbSet.Find(id);

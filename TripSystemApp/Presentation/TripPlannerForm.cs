@@ -19,31 +19,28 @@ namespace TripSystemApp.Presentation
         private readonly UserService _userService;
         private readonly TripAccommodationService _tripAccommodationService;
         private readonly TripTransportationService _tripTransportationService;
+        private readonly DestinationRepository _destinationRepository;
         private User _currentUser;
-        private readonly TravelDbContext _dbContext;
-        private UserRepository userRepository;
-        private DestinationRepository _destinationRepository;
+
         private string selectedDeparture;
         private string selectedAccommodation;
         private string selectedReturn;
         public TripPlannerForm(User currentUser)
         {
-            _dbContext = new TravelDbContext();
-            // Instantiate the UserRepository and UserTripRepository using the DbContext
-            userRepository = new UserRepository(_dbContext);
-
-            var userTripRepository = new UserTripRepository(_dbContext);
-            var userTripOptionRepository = new TransportationOptionRepository(_dbContext);
-            var accommodationRepository = new AccommodationRepository(_dbContext);
-
-            _userService = new UserService(_dbContext); // Initialize your UserService
-            _tripTransportationService = new TripTransportationService(_dbContext, userTripOptionRepository);
-            _tripAccommodationService = new TripAccommodationService(_dbContext, accommodationRepository);
-
-            _currentUser = currentUser;
-            _destinationRepository = new DestinationRepository(new TravelDbContext());
-
             InitializeComponent();
+            _currentUser = currentUser;
+            var dbContext = new TravelDbContext();
+
+            var userRepository = new UserRepository(dbContext);
+            var userTripRepository = new UserTripRepository(dbContext);
+            var userTripOptionRepository = new TransportationOptionRepository(dbContext);
+            var accommodationRepository = new AccommodationRepository(dbContext);
+
+            _userService = new UserService(userRepository, userTripRepository);
+            _tripTransportationService = new TripTransportationService(dbContext, userTripOptionRepository);
+            _tripAccommodationService = new TripAccommodationService(dbContext, accommodationRepository);
+            _destinationRepository = new DestinationRepository(dbContext);
+
             InitializeDateTimePickers();
         }
         private void InitializeDateTimePickers()
@@ -61,10 +58,14 @@ namespace TripSystemApp.Presentation
         {
             // Retrieve user input from the form
             string destination = txtDestination.Text;
-            string departure = txtDeparture.Text;
             DateTime departureDate = dtpDepartureDate.Value.Date;
             string transportType = cmbTransportType.SelectedItem?.ToString();
 
+            if (string.IsNullOrEmpty(destination))
+            {
+                MessageBox.Show("Please enter a destination.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             // Retrieve available transportations based on the destination and departure date
             List<TransportationOption> transportations = _tripTransportationService.GetTransportationsByDestinationAndTime(destination, departureDate, transportType);
             dataGridViewSearchResults.DataSource = transportations;
@@ -228,11 +229,16 @@ namespace TripSystemApp.Presentation
 
         private void btnBookTrip_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(selectedDeparture) || string.IsNullOrEmpty(selectedAccommodation) || string.IsNullOrEmpty(selectedReturn))
+            {
+                MessageBox.Show("Please select a departure transportation, accommodation, and return transportation before booking the trip.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             // Retrieve the selected destination, departure, accommodation, and transportation options
             string destination = txtDestination.Text;
-            string accommodationId = selectedAccommodation; // Assuming selectedAccommodation contains the ID of the chosen accommodation
-            string departureTransportationId = selectedDeparture; // Assuming selectedDeparture contains the ID of the chosen departure transportation
-            string returnTransportationId = selectedReturn; // Assuming selectedReturn contains the ID of the chosen return transportation
+            string accommodationId = selectedAccommodation;
+            string departureTransportationId = selectedDeparture;
+            string returnTransportationId = selectedReturn;
             int userID = _currentUser.UserID;
             int destinationID = _destinationRepository.GetDestinationIDByName(destination);
 

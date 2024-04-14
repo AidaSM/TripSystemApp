@@ -18,20 +18,13 @@ namespace TripSystemApp.Presentation
     {
         private readonly UserService _userService;
         private User _currentUser;
-        private readonly TravelDbContext _dbContext;
-        private UserRepository userRepository;
 
-        public MainForm(User currentUser)
+        public MainForm(User currentUser, UserService userService)
         {
             InitializeComponent();
 
-            _dbContext = new TravelDbContext();
-            // Instantiate the UserRepository and UserTripRepository using the DbContext
-            userRepository = new UserRepository(_dbContext);
-            var userTripRepository = new UserTripRepository(_dbContext);
-
             _currentUser = currentUser; // Store the logged-in user
-            _userService = new UserService(userRepository, userTripRepository); // Initialize your UserService
+            _userService = userService; // Initialize your UserService
 
             // Set up DataGridView properties
             InitializeDataGridView();
@@ -41,7 +34,6 @@ namespace TripSystemApp.Presentation
             // Set the username label text
             SetUsernameLabel();
         }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             // Load the logged user's trips into the DataGridView

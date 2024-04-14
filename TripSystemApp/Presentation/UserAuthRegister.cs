@@ -15,17 +15,11 @@ namespace TripSystemApp.Presentation
 {
     public partial class UserAuthRegister : Form
     {
-        private UserService userService;
-        private readonly TravelDbContext _dbContext;
-        private UserRepository userRepository;
-        public UserAuthRegister()
+        private readonly UserService _userService;
+        public UserAuthRegister(UserService userService)
         {
             InitializeComponent();
-            _dbContext = new TravelDbContext();
-            // Instantiate the AccommodationRepository using the DbContext
-            userRepository = new UserRepository(_dbContext);
-
-            userService = new UserService(userRepository);
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -34,23 +28,21 @@ namespace TripSystemApp.Presentation
             string password = txtAuthPass.Text;
 
             // Authenticate the user using the UserService
-            bool isValidUser = userService.AuthenticateUser(email, password);
+            bool isValidUser = _userService.AuthenticateUser(email, password);
 
             if (isValidUser)
             {
-
-                User currentUser = userService.GetUserByEmail(email);
-
-                var mainForm = new MainForm(currentUser);
+                User currentUser = _userService.GetUserByEmail(email);
+                var mainForm = new MainForm(currentUser, _userService);
                 mainForm.ShowDialog();
             }
             else
             {
                 MessageBox.Show("Invalid email or password. Please try again.");
-                
                 txtAuthPass.Clear();
             }
         }
+
 
         private void btnReg_Click(object sender, EventArgs e)
         {
@@ -81,7 +73,7 @@ namespace TripSystemApp.Presentation
             try
             {
                 // Add the new user to the database using the UserService
-                userService.RegisterUser(newUser);
+                _userService.RegisterUser(newUser);
 
                 // Display a success message
                 MessageBox.Show("User registered successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using TripSystemApp.Interfaces;
 using TripSystemApp.Models;
 
 namespace TripSystemApp.DataAccess
 {
-    public class UserTripRepository : GenericRepository<UserTrip>
+    public class UserTripRepository : GenericRepository<UserTrip>, IUserTripRepository
     {
         public UserTripRepository(TravelDbContext context) : base(context)
         {
