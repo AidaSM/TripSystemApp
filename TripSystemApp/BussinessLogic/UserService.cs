@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Cryptography;
 using TripSystemApp.DataAccess;
 using TripSystemApp.Models;
@@ -10,7 +11,13 @@ namespace TripSystemApp.BusinessLogic
     {
         private readonly UserRepository _userRepository;
         private readonly UserTripRepository _userTripRepository;
-
+        private readonly TravelDbContext _dbContext;
+        public UserService(TravelDbContext dbContext)
+        {
+            _dbContext = dbContext;
+            _userRepository = new UserRepository(_dbContext);
+            _userTripRepository = new UserTripRepository(_dbContext);
+        }
         public UserService(UserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -90,6 +97,26 @@ namespace TripSystemApp.BusinessLogic
         {
             string hashedInput = HashPassword(password);
             return hashedInput == hashedPassword;
+        }
+        public int CreateUserTrip(int userId, int destinationId, DateTime departureDate, DateTime returnDate)
+        {
+            // Create a new UserTrip object
+            UserTrip userTrip = new UserTrip
+            {
+                UserID = userId, 
+                DestinationID = destinationId,
+                DepartureDate = departureDate,
+                ReturnDate = returnDate
+            };
+
+            // Add the UserTrip to the database context
+            _dbContext.UserTrips.Add(userTrip);
+
+            // Save changes to the database
+            _dbContext.SaveChanges();
+
+            // Return the ID of the newly created UserTrip
+            return userTrip.UserTripID;
         }
     }
 }

@@ -38,9 +38,6 @@ namespace TripSystemApp.Presentation
 
             if (isValidUser)
             {
-                MessageBox.Show("Login successful!");
-                // Redirect to the main application form 
-                // Open the trip planner form
 
                 User currentUser = userService.GetUserByEmail(email);
 
@@ -50,7 +47,7 @@ namespace TripSystemApp.Presentation
             else
             {
                 MessageBox.Show("Invalid email or password. Please try again.");
-                // Clear the password textbox or provide other feedback to the user
+                
                 txtAuthPass.Clear();
             }
         }

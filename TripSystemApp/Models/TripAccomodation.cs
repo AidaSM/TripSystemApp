@@ -13,8 +13,8 @@ namespace TripSystemApp.Models
         public int TripAccommodationID { get; set; }
         public int UserTripID { get; set; }
         public int AccommodationID { get; set; }
-        public DateTime CheckInDate { get; set; }
-        public DateTime CheckOutDate { get; set; }
+        public DateTime? CheckInDate { get; set; }
+        public DateTime? CheckOutDate { get; set; }
 
         // Navigation properties
         public UserTrip UserTrip { get; set; }

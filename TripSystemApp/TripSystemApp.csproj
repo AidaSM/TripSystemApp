@@ -228,6 +228,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -245,6 +246,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\road-trip-activity-background-free-vector.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pngtree-summer-vacation-holiday-seaside-image_780926.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropical-beach-landscape-with-sailboat-and-palm-trees-on-the-seashore-summer-vacation-background-cartoon-concept-vector.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sunset-or-sunrise-on-the-beach-landscape-with-beautiful-pink-sky-and-sun-reflection-over-the-water-summer-vacation-background-cartoon-concept-vector.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
