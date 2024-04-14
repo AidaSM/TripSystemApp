@@ -12,5 +12,12 @@ namespace TripSystemApp.DataAccess
         public TripAccommodationRepository(TravelDbContext context) : base(context)
         {
         }
+        public List<TripAccommodation> GetAccommodationsByUserTripID(int userTripID)
+        {
+            // Retrieve accommodations associated with the specified user trip ID
+            return _context.TripAccommodations
+                           .Where(ta => ta.UserTripID == userTripID)
+                           .ToList();
+        }
     }
 }

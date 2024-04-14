@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using TripSystemApp.DataAccess;
 using TripSystemApp.Models;
@@ -8,12 +9,22 @@ namespace TripSystemApp.BusinessLogic
     public class UserService
     {
         private readonly UserRepository _userRepository;
+        private readonly UserTripRepository _userTripRepository;
 
         public UserService(UserRepository userRepository)
         {
             _userRepository = userRepository;
         }
+        public UserService(UserTripRepository userTripRepository)
+        {
+            _userTripRepository = userTripRepository;
+        }
 
+        public UserService(UserRepository userRepository, UserTripRepository userTripRepository)
+        {
+            _userRepository = userRepository;
+            _userTripRepository = userTripRepository;
+        }
         // Register a new user
         public void RegisterUser(User user)
         {
@@ -50,6 +61,11 @@ namespace TripSystemApp.BusinessLogic
             return false; // Authentication failed
         }
 
+        public List<UserTrip> GetUserTrips(int userId)
+        {
+            return _userTripRepository.GetUserTripsByUserId(userId);
+        }
+
         // Hash the password using a cryptographic hashing algorithm
         private string HashPassword(string password)
         {
@@ -58,6 +74,15 @@ namespace TripSystemApp.BusinessLogic
                 byte[] hashedBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 return Convert.ToBase64String(hashedBytes);
             }
+        }
+        public User GetUserByEmail(string email)
+        {
+            // Retrieve the user based on their email
+            return _userRepository.GetUserByEmail(email);
+        }
+        public IEnumerable<int> GetUserTripIDs(int userID, int destinationID, DateTime departureDate)
+        {
+            return _userTripRepository.GetUserTripIDs(userID, destinationID, departureDate);
         }
 
         // Verify if the provided password matches the hashed password

@@ -28,46 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnTripPlanner = new System.Windows.Forms.Button();
-            this.btnBooking = new System.Windows.Forms.Button();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.btnOpenTripPlanner = new System.Windows.Forms.Button();
+            this.dataGridViewTrips = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTrips)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnTripPlanner
+            // lblUsername
             // 
-            this.btnTripPlanner.Location = new System.Drawing.Point(113, 103);
-            this.btnTripPlanner.Name = "btnTripPlanner";
-            this.btnTripPlanner.Size = new System.Drawing.Size(83, 54);
-            this.btnTripPlanner.TabIndex = 0;
-            this.btnTripPlanner.Text = "button1";
-            this.btnTripPlanner.UseVisualStyleBackColor = true;
-            this.btnTripPlanner.Click += new System.EventHandler(this.btnTripPlanner_Click_1);
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(706, 27);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(55, 13);
+            this.lblUsername.TabIndex = 0;
+            this.lblUsername.Text = "Username";
             // 
-            // btnBooking
+            // btnOpenTripPlanner
             // 
-            this.btnBooking.Location = new System.Drawing.Point(316, 103);
-            this.btnBooking.Name = "btnBooking";
-            this.btnBooking.Size = new System.Drawing.Size(80, 54);
-            this.btnBooking.TabIndex = 1;
-            this.btnBooking.Text = "button2";
-            this.btnBooking.UseVisualStyleBackColor = true;
-            this.btnBooking.Click += new System.EventHandler(this.btnBooking_Click_1);
+            this.btnOpenTripPlanner.Location = new System.Drawing.Point(65, 375);
+            this.btnOpenTripPlanner.Name = "btnOpenTripPlanner";
+            this.btnOpenTripPlanner.Size = new System.Drawing.Size(134, 20);
+            this.btnOpenTripPlanner.TabIndex = 1;
+            this.btnOpenTripPlanner.Text = "Plan a trip!";
+            this.btnOpenTripPlanner.UseVisualStyleBackColor = true;
+            this.btnOpenTripPlanner.Click += new System.EventHandler(this.btnOpenTripPlanner_Click);
+            // 
+            // dataGridViewTrips
+            // 
+            this.dataGridViewTrips.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTrips.Location = new System.Drawing.Point(65, 114);
+            this.dataGridViewTrips.Name = "dataGridViewTrips";
+            this.dataGridViewTrips.Size = new System.Drawing.Size(577, 187);
+            this.dataGridViewTrips.TabIndex = 2;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnBooking);
-            this.Controls.Add(this.btnTripPlanner);
+            this.Controls.Add(this.dataGridViewTrips);
+            this.Controls.Add(this.btnOpenTripPlanner);
+            this.Controls.Add(this.lblUsername);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTrips)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnTripPlanner;
-        private System.Windows.Forms.Button btnBooking;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.Button btnOpenTripPlanner;
+        private System.Windows.Forms.DataGridView dataGridViewTrips;
     }
 }

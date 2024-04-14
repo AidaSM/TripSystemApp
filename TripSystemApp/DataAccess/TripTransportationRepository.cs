@@ -12,5 +12,12 @@ namespace TripSystemApp.DataAccess
         public TripTransportationRepository(TravelDbContext context) : base(context)
         {
         }
+        public List<TripTransportation> GetTransportationsByUserTripID(int userTripID)
+        {
+            // Retrieve transportations associated with the specified user trip ID
+            return _context.TripTransportations
+                           .Where(tt => tt.UserTripID == userTripID)
+                           .ToList();
+        }
     }
 }

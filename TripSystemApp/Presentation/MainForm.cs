@@ -7,28 +7,83 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TripSystemApp.BusinessLogic;
+using TripSystemApp.DataAccess;
+using TripSystemApp.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace TripSystemApp.Presentation
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        private readonly UserService _userService;
+        private User _currentUser;
+        private readonly TravelDbContext _dbContext;
+        private UserRepository userRepository;
+
+        public MainForm(User currentUser)
         {
             InitializeComponent();
+
+            _dbContext = new TravelDbContext();
+            // Instantiate the UserRepository and UserTripRepository using the DbContext
+            userRepository = new UserRepository(_dbContext);
+            var userTripRepository = new UserTripRepository(_dbContext);
+
+            _currentUser = currentUser; // Store the logged-in user
+            _userService = new UserService(userRepository, userTripRepository); // Initialize your UserService
+
+            // Set up DataGridView properties
+            InitializeDataGridView();
+
+            // Load the logged user's trips into the DataGridView
+            LoadUserTrips();
+            // Set the username label text
+            SetUsernameLabel();
         }
 
-        private void btnBooking_Click_1(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            // Open the booking form
-            var bookingForm = new BookingForm();
-            bookingForm.ShowDialog();
+            // Load the logged user's trips into the DataGridView
+            LoadUserTrips();
+            // Set the username label text
+            SetUsernameLabel();
         }
 
-        private void btnTripPlanner_Click_1(object sender, EventArgs e)
+        private void InitializeDataGridView()
         {
-            // Open the trip planner form
-            var tripPlannerForm = new TripPlannerForm();
-            tripPlannerForm.ShowDialog();
+            // Set DataGridView properties
+            dataGridViewTrips.AutoGenerateColumns = false;
+
+            // Define columns for DataGridView
+            dataGridViewTrips.Columns.Add("Destination", "Destination");
+            dataGridViewTrips.Columns.Add("DepartureDate", "Departure Date");
+            dataGridViewTrips.Columns.Add("ReturnDate", "Return Date");
+        }
+
+        private void LoadUserTrips()
+        {
+            // Retrieve the logged user's trips from the database
+            var userTrips = _userService.GetUserTrips(_currentUser.UserID);
+
+            // Bind the trips data to the DataGridView
+            dataGridViewTrips.Rows.Clear();
+            foreach (var trip in userTrips)
+            {
+                dataGridViewTrips.Rows.Add(trip.Destination.Name, trip.DepartureDate, trip.ReturnDate);
+            }
+        }
+
+        private void SetUsernameLabel()
+        {
+            lblUsername.Text = $"Welcome, {_currentUser.Username}!";
+        }
+        private void btnOpenTripPlanner_Click(object sender, EventArgs e)
+        {
+            TripPlannerForm tripPlannerForm = new TripPlannerForm(_currentUser);
+
+            // Show the TripPlannerForm
+            tripPlannerForm.Show();
         }
     }
 }

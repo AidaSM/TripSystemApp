@@ -158,6 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BussinessLogic\BookingService.cs" />
+    <Compile Include="BussinessLogic\TripAccommodationService.cs" />
+    <Compile Include="BussinessLogic\TripTransportationService.cs" />
     <Compile Include="BussinessLogic\UserService.cs" />
     <Compile Include="DataAccess\GenericRepository.cs" />
     <Compile Include="DataAccess\TransportationOptionRepository.cs" />
@@ -182,12 +184,6 @@
     </Compile>
     <Compile Include="Presentation\AccomodationForm.Designer.cs">
       <DependentUpon>AccomodationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\BookingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\BookingForm.Designer.cs">
-      <DependentUpon>BookingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\MainForm.cs">
       <SubType>Form</SubType>
@@ -214,9 +210,6 @@
     <Compile Include="ViewModels\TripPlannerViewModel.cs" />
     <EmbeddedResource Include="Presentation\AccomodationForm.resx">
       <DependentUpon>AccomodationForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\BookingForm.resx">
-      <DependentUpon>BookingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

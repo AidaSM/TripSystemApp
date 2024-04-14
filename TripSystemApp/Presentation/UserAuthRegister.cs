@@ -39,7 +39,13 @@ namespace TripSystemApp.Presentation
             if (isValidUser)
             {
                 MessageBox.Show("Login successful!");
-                // Redirect to the main application form or perform any other actions
+                // Redirect to the main application form 
+                // Open the trip planner form
+
+                User currentUser = userService.GetUserByEmail(email);
+
+                var mainForm = new MainForm(currentUser);
+                mainForm.ShowDialog();
             }
             else
             {
