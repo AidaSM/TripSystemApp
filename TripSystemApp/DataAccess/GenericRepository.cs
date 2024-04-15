@@ -4,10 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using TripSystemApp.Interfaces;
 using TripSystemApp.Models;
+using TripSystemApp.Helpers;
 
 namespace TripSystemApp.DataAccess
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : Subject ,IRepository<TEntity> where TEntity : class
     {
         protected readonly TravelDbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
@@ -22,6 +23,8 @@ namespace TripSystemApp.DataAccess
         {
             _dbSet.Add(entity);
             _context.SaveChanges();
+
+            NotifyAll(this, EventArgs.Empty);
         }
 
         public IEnumerable<TEntity> GetAll() 
@@ -38,11 +41,14 @@ namespace TripSystemApp.DataAccess
         {
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
+
+            NotifyAll(this, EventArgs.Empty);
         }
         public void Delete(TEntity entity)
         {
             _dbSet.Remove(entity);
             _context.SaveChanges();
+            NotifyAll(this, EventArgs.Empty);
         }
         public void Delete(int id)
         {
@@ -51,6 +57,8 @@ namespace TripSystemApp.DataAccess
             {
                 _dbSet.Remove(entity);
                 _context.SaveChanges();
+
+                NotifyAll(this, EventArgs.Empty);
             }
         }
     }
