@@ -39,19 +39,14 @@ namespace TripSystemApp.BusinessLogic
 
         public bool AuthenticateUser(string email, string password)
         {
-            // Retrieve the user from the repository based on the provided email
             User user = _userRepository.GetUserByEmail(email);
 
-            // Check if a user with the provided email exists
             if (user != null)
             {
-                // Compare the provided password with the user's actual password (after hashing)
-                // For simplicity, let's assume the passwords are stored hashed in the database
-                return user.Password == password;
+                return user.Password == HashPassword(password);
             }
             else
             {
-                // If no user is found with the provided email, return false
                 return false;
             }
         }

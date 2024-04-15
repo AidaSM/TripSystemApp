@@ -13,7 +13,6 @@ namespace TripSystemApp.DataAccess
         public DbSet<TripAccommodation> TripAccommodations { get; set; }
         public DbSet<TripTransportation> TripTransportations { get; set; }
 
-        // Constructor
         public TravelDbContext() : base("name=TravelDbConnectionString")
         {
         }

@@ -1,5 +1,4 @@
-﻿// UserTripRepository.cs
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace TripSystemApp.DataAccess
         public List<UserTrip> GetUserTripsByUserId(int userId)
         {
             return _context.UserTrips
-                           .Include(ut => ut.Destination) // Eager loading of Destination
+                           .Include(ut => ut.Destination) 
                            .Where(ut => ut.UserID == userId)
                            .ToList();
         }

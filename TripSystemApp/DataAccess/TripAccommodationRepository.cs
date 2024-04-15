@@ -1,5 +1,4 @@
-﻿// TripAccommodationRepository.cs
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -14,7 +13,6 @@ namespace TripSystemApp.DataAccess
         }
         public List<TripAccommodation> GetAccommodationsByUserTripID(int userTripID)
         {
-            // Retrieve accommodations associated with the specified user trip ID
             return _context.TripAccommodations
                            .Where(ta => ta.UserTripID == userTripID)
                            .ToList();

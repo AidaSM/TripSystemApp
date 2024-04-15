@@ -21,19 +21,14 @@ namespace TripSystemApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Create an instance of TravelDbContext
-            TravelDbContext dbContext = new TravelDbContext(/* provide necessary parameters if any */);
+            TravelDbContext dbContext = new TravelDbContext();
 
-            // Create an instance of UserTripRepository with the TravelDbContext instance
             UserTripRepository userTripRepository = new UserTripRepository(dbContext);
 
-            // Create an instance of UserRepository with the TravelDbContext instance
             UserRepository userRepository = new UserRepository(dbContext);
 
-            // Create an instance of UserService with the IUserRepository and IUserTripRepository instances
             UserService userService = new UserService(userRepository, userTripRepository);
 
-            // Create an instance of UserAuthRegister and pass it the UserService instance
             Application.Run(new UserAuthRegister(userService));
         }
 

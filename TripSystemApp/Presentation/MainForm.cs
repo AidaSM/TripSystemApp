@@ -23,31 +23,24 @@ namespace TripSystemApp.Presentation
         {
             InitializeComponent();
 
-            _currentUser = currentUser; // Store the logged-in user
-            _userService = userService; // Initialize your UserService
+            _currentUser = currentUser; 
+            _userService = userService; 
 
-            // Set up DataGridView properties
             InitializeDataGridView();
 
-            // Load the logged user's trips into the DataGridView
             LoadUserTrips();
-            // Set the username label text
             SetUsernameLabel();
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // Load the logged user's trips into the DataGridView
             LoadUserTrips();
-            // Set the username label text
             SetUsernameLabel();
         }
 
         private void InitializeDataGridView()
         {
-            // Set DataGridView properties
             dataGridViewTrips.AutoGenerateColumns = false;
 
-            // Define columns for DataGridView
             dataGridViewTrips.Columns.Add("Destination", "Destination");
             dataGridViewTrips.Columns.Add("DepartureDate", "Departure Date");
             dataGridViewTrips.Columns.Add("ReturnDate", "Return Date");
@@ -55,10 +48,8 @@ namespace TripSystemApp.Presentation
 
         private void LoadUserTrips()
         {
-            // Retrieve the logged user's trips from the database
             var userTrips = _userService.GetUserTrips(_currentUser.UserID);
 
-            // Bind the trips data to the DataGridView
             dataGridViewTrips.Rows.Clear();
             foreach (var trip in userTrips)
             {
@@ -74,7 +65,6 @@ namespace TripSystemApp.Presentation
         {
             TripPlannerForm tripPlannerForm = new TripPlannerForm(_currentUser);
 
-            // Show the TripPlannerForm
             tripPlannerForm.Show();
         }
     }

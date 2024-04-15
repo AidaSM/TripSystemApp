@@ -56,7 +56,6 @@ namespace TripSystemApp.Presentation
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            // Retrieve user input from the form
             string destination = txtDestination.Text;
             DateTime departureDate = dtpDepartureDate.Value.Date;
             string transportType = cmbTransportType.SelectedItem?.ToString();
@@ -66,16 +65,12 @@ namespace TripSystemApp.Presentation
                 MessageBox.Show("Please enter a destination.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            // Retrieve available transportations based on the destination and departure date
             List<TransportationOption> transportations = _tripTransportationService.GetTransportationsByDestinationAndTime(destination, departureDate, transportType);
             dataGridViewSearchResults.DataSource = transportations;
 
             dataGridViewSearchResults.Columns["TransportationID"].Visible = false;
-            
-
            
         }
-
 
         private void btnChoose_Click(object sender, EventArgs e)
         {
@@ -86,17 +81,13 @@ namespace TripSystemApp.Presentation
             }
         }
 
-
         private void btnSearchReturn_Click(object sender, EventArgs e)
         {
             string destination = txtDestination.Text;
             string accommodationType = cmbAccommodationType.SelectedItem?.ToString();
 
-            // Query the database to find matching accommodations based on the user input
             List<Accommodation> accommodations = _tripAccommodationService.SearchAccommodations(destination, accommodationType);
 
-
-            // Display the search results in a DataGridView or another appropriate control
             dataGridViewAccommodations.DataSource = accommodations;
             dataGridViewAccommodations.Columns["AccommodationID"].Visible = false;
             dataGridViewAccommodations.Columns["DestinationID"].Visible = false;
@@ -105,14 +96,10 @@ namespace TripSystemApp.Presentation
 
         private void btnSearchReturn_Click_1(object sender, EventArgs e)
         {
-            
-                // Retrieve user input from the form
-                string destination = txtDestination.Text;
                 string departure = txtDeparture.Text;
                 DateTime returnDate = dtpReturnDate.Value.Date;
                 string transportType = cmbTransportTypeReturn.SelectedItem?.ToString();
 
-                // Retrieve available transportations based on the destination and departure date
                 List<TransportationOption> transportations = _tripTransportationService.GetTransportationsByDestinationAndTime(departure, returnDate, transportType);
 
                 dataGridViewReturn.DataSource = transportations;
@@ -144,7 +131,6 @@ namespace TripSystemApp.Presentation
         {
             if (tabControlMain.SelectedTab == tabPage4)
             {
-                // Update labels with corresponding text
                 lblDestination.Text = txtDestination.Text;
                 lblDeparture.Text = txtDeparture.Text;
 
@@ -152,50 +138,40 @@ namespace TripSystemApp.Presentation
                 DateTime departureDate = DateTime.MinValue;
                 DateTime returnDate = DateTime.MinValue;
 
-                // Retrieve information for departure
                 if (!string.IsNullOrEmpty(selectedDeparture))
                 {
-                    // Retrieve transport type and time based on selectedDeparture ID
                     TransportationOption departureTransportation = _tripTransportationService.GetTransportationById(selectedDeparture);
                     lblTransportTypeDeparture.Text = departureTransportation.Type;
-                    lblStartDate.Text = departureTransportation.DepartureTime.ToString(); // Update with appropriate format
+                    lblStartDate.Text = departureTransportation.DepartureTime.ToString();
 
-                    // Add the price of departure transportation to total cost
                     totalCost += departureTransportation.Price;
 
                     departureDate = departureTransportation.DepartureTime;
                 }
 
-                // Retrieve accommodation name and its cost
                 if (!string.IsNullOrEmpty(selectedAccommodation))
                 {
                     Accommodation accommodation = _tripAccommodationService.GetAccommodationById(selectedAccommodation);
                     lblAccommodation.Text = accommodation.Name;
 
-                    // Calculate the number of nights of accommodation
                     TimeSpan accommodationDuration = returnDate - departureDate;
                     int numberOfNights = (int)Math.Ceiling(accommodationDuration.TotalDays);
 
-                    // Add the price of accommodation per night to total cost
                     totalCost += accommodation.Price * numberOfNights;
                 }
 
-                // Retrieve information for return
                 if (!string.IsNullOrEmpty(selectedReturn))
                 {
-                    // Retrieve transport type and time based on selectedReturn ID
                     TransportationOption returnTransportation = _tripTransportationService.GetTransportationById(selectedReturn);
                     lblTransportTypeReturn.Text = returnTransportation.Type;
-                    lblReturnDate.Text = returnTransportation.DepartureTime.ToString(); // Update with appropriate format
+                    lblReturnDate.Text = returnTransportation.DepartureTime.ToString(); 
 
-                    // Add the price of return transportation to total cost
                     totalCost += returnTransportation.Price;
 
                     returnDate = returnTransportation.DepartureTime;
                 }
 
-                // Display the total cost in lblTotalCost
-                lblTotalCost.Text = totalCost.ToString("C"); // Format as currency
+                lblTotalCost.Text = totalCost.ToString("C"); 
             }
         }
 
@@ -204,7 +180,6 @@ namespace TripSystemApp.Presentation
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                // Get the value of the clicked cell and store it in selectedOption
                 selectedDeparture = dataGridViewSearchResults.Rows[e.RowIndex].Cells["TransportationID"].Value.ToString();
             }
         }
@@ -213,7 +188,6 @@ namespace TripSystemApp.Presentation
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                // Get the value of the clicked cell and store it in selectedOption
                 selectedReturn = dataGridViewReturn.Rows[e.RowIndex].Cells["TransportationID"].Value.ToString();
             }
         }
@@ -222,7 +196,6 @@ namespace TripSystemApp.Presentation
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                // Get the value of the clicked cell and store it in selectedOption
                 selectedAccommodation = dataGridViewAccommodations.Rows[e.RowIndex].Cells["AccommodationID"].Value.ToString();
             }
         }
@@ -234,7 +207,6 @@ namespace TripSystemApp.Presentation
                 MessageBox.Show("Please select a departure transportation, accommodation, and return transportation before booking the trip.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            // Retrieve the selected destination, departure, accommodation, and transportation options
             string destination = txtDestination.Text;
             string accommodationId = selectedAccommodation;
             string departureTransportationId = selectedDeparture;
@@ -242,7 +214,6 @@ namespace TripSystemApp.Presentation
             int userID = _currentUser.UserID;
             int destinationID = _destinationRepository.GetDestinationIDByName(destination);
 
-            // Retrieve the return transportation option and its departure time
             TransportationOption returnTransportation = _tripTransportationService.GetTransportationById(selectedReturn);
             DateTime returnDate = returnTransportation.DepartureTime;
             DateTime arrivalReturnDate = returnTransportation.ArrivalTime;
@@ -251,19 +222,14 @@ namespace TripSystemApp.Presentation
             DateTime departureDate = departureTransportation.DepartureTime;
             DateTime arrivalDate = departureTransportation.ArrivalTime;
 
-            // Insert data into UserTrips table
             int userTripId = _userService.CreateUserTrip(userID, destinationID, departureDate, returnDate);
 
-            // Insert data into TripAccommodations table
             _tripAccommodationService.CreateTripAccommodation(userTripId, Int32.Parse(accommodationId), arrivalDate, returnDate);
 
-            // Insert data into TripTransportations table for departure transportation
             _tripTransportationService.CreateTripTransportation(userTripId, Int32.Parse(departureTransportationId), departureDate, arrivalDate);
 
-            // Insert data into TripTransportations table for return transportation
             _tripTransportationService.CreateTripTransportation(userTripId, Int32.Parse(returnTransportationId), returnDate, arrivalReturnDate);
 
-            // Optionally, you can display a message to indicate that the trip has been booked successfully
             MessageBox.Show("Trip booked successfully!");
         }
 

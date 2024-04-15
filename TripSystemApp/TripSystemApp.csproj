@@ -171,10 +171,9 @@
   <ItemGroup>
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUserTripRepository.cs" />
-    <Compile Include="Services\BookingService.cs" />
-    <Compile Include="Services\TripAccommodationService.cs" />
-    <Compile Include="Services\TripTransportationService.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="BusinessLogic\TripAccommodationService.cs" />
+    <Compile Include="BusinessLogic\TripTransportationService.cs" />
+    <Compile Include="BusinessLogic\UserService.cs" />
     <Compile Include="DataAccess\GenericRepository.cs" />
     <Compile Include="DataAccess\TransportationOptionRepository.cs" />
     <Compile Include="DataAccess\TravelDbContext.cs" />
@@ -194,12 +193,6 @@
     <Compile Include="Models\TripTransportation.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserTrip.cs" />
-    <Compile Include="Presentation\AccomodationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\AccomodationForm.Designer.cs">
-      <DependentUpon>AccomodationForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,9 +216,6 @@
     <Compile Include="ViewModels\BookingViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\TripPlannerViewModel.cs" />
-    <EmbeddedResource Include="Presentation\AccomodationForm.resx">
-      <DependentUpon>AccomodationForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Presentation\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -259,9 +249,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\road-trip-activity-background-free-vector.jpg" />
   </ItemGroup>

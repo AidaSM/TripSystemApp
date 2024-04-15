@@ -1,5 +1,4 @@
-﻿// TripTransportationRepository.cs
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -14,7 +13,6 @@ namespace TripSystemApp.DataAccess
         }
         public List<TripTransportation> GetTransportationsByUserTripID(int userTripID)
         {
-            // Retrieve transportations associated with the specified user trip ID
             return _context.TripTransportations
                            .Where(tt => tt.UserTripID == userTripID)
                            .ToList();
